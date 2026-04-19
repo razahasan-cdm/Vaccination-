@@ -1,0 +1,13 @@
+body { font-family: Arial, sans-serif; background-color: #f4f7f6; padding: 20px; }
+.container { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+.form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px; }
+input { padding: 10px; border: 1px solid #ddd; border-radius: 4px; }
+.vaccine-dates { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 20px; font-size: 0.9em; }
+.btn-add { background: #28a745; color: white; border: none; padding: 10px 20px; cursor: pointer; }
+.btn-export { background: #007bff; color: white; border: none; padding: 10px 20px; cursor: pointer; }
+.table-container { margin-top: 30px; overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; }
+th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+th { background-color: #f8f9fa; }
+.due { background-color: #fff3cd; color: #856404; font-weight: bold; }
+.defaulter { background-color: #f8d7da; color: #721c24; font-weight: bold; }
