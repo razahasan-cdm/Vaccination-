@@ -1,0 +1,75 @@
+// script.js
+const vaccineForm = document.getElementById('vaccineForm');
+const tableBody = document.getElementById('tableBody');
+
+vaccineForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const dobValue = new Date(document.getElementById('dob').value);
+    const today = new Date();
+    
+    // Calculate Age in Months
+    const ageInMonths = (today.getFullYear() - dobValue.getFullYear()) * 12 + (today.getMonth() - dobValue.getMonth());
+    
+    // Get values
+    const data = {
+        name: document.getElementById('name').value,
+        father: document.getElementById('fatherName').value,
+        dob: document.getElementById('dob').value,
+        age: ageInMonths,
+        address: document.getElementById('address').value,
+        bcg: document.getElementById('bcg').value || "N/A",
+        p1: document.getElementById('penta1').value || "N/A",
+        p2: document.getElementById('penta2').value || "N/A",
+        p3: document.getElementById('penta3').value || "N/A",
+        mr1: document.getElementById('mr1').value || "N/A",
+        mr2: document.getElementById('mr2').value || "N/A",
+        dtp: document.getElementById('dtp').value || "N/A"
+    };
+
+    const status = calculateStatus(dobValue, data);
+    addRow(data, status);
+    vaccineForm.reset();
+});
+
+function calculateStatus(dob, data) {
+    const today = new Date();
+    const diffDays = (today - dob) / (1000 * 60 * 60 * 24);
+    const ageMonths = (today.getFullYear() - dob.getFullYear()) * 12 + (today.getMonth() - dob.getMonth());
+
+    // Logic for Penta 1 (45 days)
+    if (data.p1 === "N/A") {
+        if (diffDays > 55) return "Defaulter"; // 45 + 10 days grace
+        if (diffDays >= 45) return "Due";
+    }
+
+    // Logic for MR 1 (9 months)
+    if (data.mr1 === "N/A") {
+        if (ageMonths > 9 || (ageMonths === 9 && today.getDate() > 10)) return "Defaulter";
+        if (ageMonths === 9) return "Due";
+    }
+
+    // Logic for DTP (18 months)
+    if (data.dtp === "N/A") {
+        if (ageMonths > 18 || (ageMonths === 18 && today.getDate() > 10)) return "Defaulter";
+        if (ageMonths === 18) return "Due";
+    }
+
+    return ""; // Blank if not due or late
+}
+
+function addRow(d, status) {
+    const row = `<tr>
+        <td>${d.name}</td><td>${d.father}</td><td>${d.dob}</td><td>${d.age}</td>
+        <td>${d.address}</td><td>${d.bcg}</td><td>${d.p1}</td><td>${d.p2}</td>
+        <td>${d.p3}</td><td>${d.mr1}</td><td>${d.mr2}</td><td>${d.dtp}</td>
+        <td class="${status.toLowerCase()}">${status}</td>
+    </tr>`;
+    tableBody.innerHTML += row;
+}
+
+function exportToExcel() {
+    const table = document.getElementById("vaccineTable");
+    const wb = XLSX.utils.table_to_book(table, { sheet: "Vaccination_List" });
+    XLSX.writeFile(wb, "Vaccination_Report.xlsx");
+}
