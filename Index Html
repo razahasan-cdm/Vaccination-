@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vaccination Entry System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h2>Children Vaccination Entry</h2>
+        
+        <form id="vaccineForm">
+            <div class="form-grid">
+                <input type="text" id="name" placeholder="Child Name" required>
+                <input type="text" id="fatherName" placeholder="Father's Name" required>
+                <input type="date" id="dob" required>
+                <input type="text" id="address" placeholder="Address" required>
+            </div>
+
+            <div class="vaccine-dates">
+                <label>BCG Date: <input type="date" id="bcg"></label>
+                <label>Penta 1: <input type="date" id="penta1"></label>
+                <label>Penta 2: <input type="date" id="penta2"></label>
+                <label>Penta 3: <input type="date" id="penta3"></label>
+                <label>MR 1: <input type="date" id="mr1"></label>
+                <label>MR 2: <input type="date" id="mr2"></label>
+                <label>DTP: <input type="date" id="dtp"></label>
+            </div>
+
+            <button type="submit" class="btn-add">Add Record</button>
+            <button type="button" class="btn-export" onclick="exportToExcel()">Download Excel</button>
+        </form>
+
+        <hr>
+
+        <div class="table-container">
+            <table id="vaccineTable">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Father Name</th>
+                        <th>DOB</th>
+                        <th>Age (Mos)</th>
+                        <th>Address</th>
+                        <th>BCG</th>
+                        <th>Penta 1</th>
+                        <th>Penta 2</th>
+                        <th>Penta 3</th>
+                        <th>MR 1</th>
+                        <th>MR 2</th>
+                        <th>DTP</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
